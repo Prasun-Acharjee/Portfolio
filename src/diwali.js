@@ -156,7 +156,6 @@ function label(text, pos) {
   const s = new Sprite(new SpriteMaterial({ map: t, transparent: true, opacity: 0.8, depthWrite: false, fog: false }));
   s.scale.set(6.4, 1.6, 1); s.position.copy(pos).add(new Vector3(0, 1.7, 0)); s.renderOrder = 5; scene.add(s); return s;
 }
-(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => STOPS.forEach((s) => label(s.name, s.p)));
 
 /* ---------------- diyas ---------------- */
 const MAXD = mobile ? 600 : 1000;
