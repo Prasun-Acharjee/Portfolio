@@ -68,6 +68,9 @@ nav ul a{text-decoration:none;color:var(--ink2);transition:color 150ms ease}
 @media (hover:hover) and (pointer:fine){nav ul a:hover{color:var(--route)}}
 @media(max-width:860px){nav ul{display:none}}
 .navright{display:flex;align-items:center;gap:14px}
+.festive{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600;text-decoration:none;color:var(--ink);padding:6px 12px 6px 9px;border:1.5px solid var(--grid);border-radius:999px;transition:border-color 150ms ease}
+.festive[hidden]{display:none}.festive svg{width:16px;height:16px}
+@media (hover:hover) and (pointer:fine){.festive:hover{border-color:var(--route)}}
 .navmail{font-size:15px;font-weight:600;text-decoration:none;border-bottom:2px solid var(--route);padding-bottom:1px}
 .theme-btn{position:relative;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--grid);background:var(--sheet);color:var(--ink);cursor:pointer;
   transition:transform 160ms var(--ease-out),border-color 150ms ease}
@@ -419,6 +422,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <li><a href="#offclock">Off the clock</a></li>
     </ul>
     <div class="navright">
+      <a class="festive" id="festive" href="diwali/" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 C10.5 4.5 11 6.5 11 8 A3 3 0 0 1 5 8 C5 6.5 5.5 4.5 8 1.5Z" fill="#F28C28"/><path d="M2 11 H14 C13 14 11 15 8 15 C5 15 3 14 2 11Z" fill="#8a3519"/></svg>Diwali</a>
       <a class="navmail" href="#contact">Get in touch</a>
       <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode">
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
@@ -746,6 +750,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       }
     }
     document.getElementById('contours').innerHTML=d;
+  })();
+
+  /* ---------- festive pages: show the link around each festival ---------- */
+  (function(){
+    const FEST=[{href:'diwali/',dates:['2026-11-08','2027-10-29','2028-10-17']}];
+    const t=new Date(); t.setHours(0,0,0,0);
+    for(const f of FEST) for(const d of f.dates){ const [y,m,dd]=d.split('-').map(Number), day=new Date(y,m-1,dd), diff=(day-t)/864e5;
+      if(diff<=14 && diff>=-5){ const a=document.getElementById('festive'); if(a) a.hidden=false; } }
   })();
 
   /* ---------- theme toggle ---------- */

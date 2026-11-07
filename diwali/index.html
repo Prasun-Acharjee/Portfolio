@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shubho Deepaboli from Prasun</title>
+<meta name="description" content="A Diwali and Kali Puja greeting from Prasun, Cheeto and Teeto in Kolkata. Light a diya, launch a firework, draw an alpana.">
+<meta name="theme-color" content="#0E1530">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shubho Deepaboli from Prasun">
+<meta property="og:description" content="Light a diya on the map, launch a firework and send up a fanush with Cheeto and Teeto.">
+<meta property="og:image" content="https://prasun-portfolio-gamma.vercel.app/diwali/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@1,6..72,400..600&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0E1530; --night2:#161F45; --brass:#C9A24B; --flame:#FFB547; --sindoor:#D6264F; --marigold:#F28C28;
+  --glow:#F6E7C8; --glow2:#CBBFA6; --alpana:#5B1626;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --gut:clamp(20px,5vw,72px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--night);-webkit-text-size-adjust:100%}
+body{color:var(--glow);font:17px/1.6 "Bricolage Grotesque",system-ui,sans-serif;overflow-x:hidden;background:var(--night)}
+::selection{background:var(--flame);color:var(--night)}
+a{color:inherit;text-underline-offset:.2em}
+:focus-visible{outline:2px solid var(--flame);outline-offset:3px;border-radius:4px}
+.place{font-family:Newsreader,Georgia,serif;font-style:italic;font-weight:400}
+
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.layer{position:relative;z-index:2;pointer-events:none}
+.layer a,.layer button,.layer canvas,.layer .tap{pointer-events:auto}
+
+/* top bar */
+.top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px var(--gut) 28px;pointer-events:none;background:linear-gradient(180deg,rgba(9,12,32,.85),rgba(9,12,32,0))}
+.top a{pointer-events:auto;text-decoration:none;font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;color:var(--glow)}
+.top a svg{width:16px;height:16px}
+.count{font-size:14px;color:var(--glow2);font-variant-numeric:tabular-nums}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:96px var(--gut) clamp(28px,7vh,72px)}
+.greet{font-family:"Noto Serif Bengali",serif;font-weight:700;font-size:clamp(64px,13vw,184px);line-height:1.05;letter-spacing:-.01em;color:var(--glow);
+  text-shadow:0 0 28px rgba(255,181,71,.45),0 0 2px rgba(255,181,71,.6)}
+.greet span{display:inline-block;opacity:0;filter:blur(6px);transform:translateY(8px)}
+.lit .greet span{opacity:1;filter:none;transform:none;transition:opacity 700ms var(--ease-out),filter 700ms var(--ease-out),transform 900ms var(--ease-out)}
+.gloss{font-family:Newsreader,serif;font-style:italic;font-size:clamp(22px,2.4vw,32px);color:var(--flame);margin-top:6px}
+.when{color:var(--glow2);margin-top:14px;max-width:44ch}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;align-items:center}
+.btn{font:600 15px/1 "Bricolage Grotesque",sans-serif;border:1.5px solid rgba(246,231,200,.45);background:rgba(14,21,48,.55);color:var(--glow);
+  padding:13px 18px;border-radius:999px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:transform 160ms var(--ease-out),background-color 200ms ease,border-color 200ms ease}
+.btn:active{transform:scale(.97)}
+.btn.warm{background:var(--flame);border-color:var(--flame);color:var(--night)}
+@media (hover:hover) and (pointer:fine){.btn:hover{border-color:var(--flame)}.btn.warm:hover{background:var(--glow);border-color:var(--glow)}}
+.hint{font-size:14px;color:var(--glow2)}
+
+/* notes that float over the map */
+.note{min-height:90svh;display:flex;align-items:center;padding:0 var(--gut)}
+.note .card{max-width:30rem}
+.note h2{font-weight:800;font-size:clamp(34px,4.6vw,58px);line-height:1;letter-spacing:-.03em;text-wrap:balance}
+.note p{color:var(--glow2);margin-top:14px;font-size:18px}
+.note{background:linear-gradient(90deg,rgba(9,12,32,.92) 0,rgba(9,12,32,.72) 34%,rgba(9,12,32,0) 62%)}
+@media(max-width:860px){.note{background:linear-gradient(180deg,rgba(9,12,32,0) 0,rgba(9,12,32,.85) 22%,rgba(9,12,32,.85) 78%,rgba(9,12,32,0) 100%)}}
+.hero::before{content:"";position:absolute;left:0;right:0;bottom:0;height:62svh;background:linear-gradient(180deg,rgba(9,12,32,0),rgba(9,12,32,.78) 70%);pointer-events:none;z-index:-1}
+.hero{position:relative}
+.roof > div:first-child{background:radial-gradient(ellipse at 20% 40%,rgba(9,12,32,.7),rgba(9,12,32,0) 70%);padding:12px 0}
+.alpana,.close{pointer-events:auto}
+.stops{list-style:none;margin-top:22px;display:grid;gap:10px}
+.stops li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+.stops i{width:10px;height:10px;border-radius:50%;background:var(--flame);box-shadow:0 0 12px var(--flame);display:block}
+.stops b{font-weight:700;color:var(--glow)}
+
+/* alpana: a floor you draw on */
+.alpana{background:var(--alpana);padding:clamp(72px,10vw,128px) var(--gut);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,80px);align-items:center;
+  box-shadow:0 -40px 80px rgba(14,21,48,.9),0 40px 80px rgba(14,21,48,.9)}
+@media(max-width:860px){.alpana{grid-template-columns:1fr}}
+.alpana h2{font-weight:800;font-size:clamp(34px,4.6vw,58px);line-height:1;letter-spacing:-.03em}
+.alpana p{color:#E8CFC4;margin-top:14px;max-width:40ch;font-size:18px}
+.alpana .tools{margin-top:24px}
+.alpana .btn{background:transparent;border-color:rgba(246,231,200,.55)}
+#alpana{width:100%;max-width:620px;aspect-ratio:1;justify-self:center;display:block;cursor:pointer}
+
+/* rooftop */
+.roof{min-height:120svh;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(72px,12vh,140px) var(--gut) 0}
+.roof h2{font-weight:800;font-size:clamp(34px,4.6vw,58px);line-height:1;letter-spacing:-.03em;max-width:14ch}
+.roof p{color:var(--glow2);margin-top:14px;max-width:38ch;font-size:18px}
+.skyline{display:block;margin-top:40px;margin-left:calc(-1 * var(--gut));width:calc(100% + 2 * var(--gut));height:clamp(220px,26vw,330px)}
+.skyline .tail{transform-box:fill-box;transform-origin:0% 100%;animation:swish 2.6s ease-in-out infinite}
+.skyline .tail.t2{animation-duration:3.1s;animation-delay:.6s}
+.skyline .head{transform-box:fill-box;transform-origin:50% 90%;animation:look 7s ease-in-out infinite}
+.skyline .head.h2{animation-delay:2.2s}
+@keyframes swish{0%,100%{transform:rotate(0)}50%{transform:rotate(14deg)}}
+@keyframes look{0%,60%,100%{transform:rotate(0)}70%,85%{transform:rotate(-9deg)}}
+
+/* close */
+.close{background:#0A1026;padding:clamp(72px,10vw,120px) var(--gut) 56px;position:relative;z-index:2}
+.close h2{font-family:"Noto Serif Bengali",serif;font-weight:700;font-size:clamp(40px,6vw,80px);line-height:1.1;color:var(--glow)}
+.close p{color:var(--glow2);margin-top:12px;max-width:44ch;font-size:18px}
+.close .tools{margin-top:28px}
+.close a.btn{text-decoration:none}
+.foot{margin-top:56px;font-size:14px;color:#8E8AA0}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,12px);z-index:6;background:var(--glow);color:var(--night);font-weight:600;font-size:14px;
+  padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 200ms ease,transform 300ms var(--ease-out)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* social card mode, used to render og.png */
+.og .layer > *:not(.hero),.og .top .count,.og .tools,.og .hint{display:none!important}
+.og .hero{min-height:100vh;justify-content:center}
+.og .when{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .greet span{opacity:1!important;filter:none!important;transform:none!important}
+  .skyline .tail,.skyline .head{animation:none}
+}
+</style>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<header class="top">
+  <a href="../"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="#FFB547" stroke-width="3"/></svg>Prasun Acharjee</a>
+  <span class="count" id="count" aria-live="polite"></span>
+</header>
+
+<main class="layer">
+  <section class="hero" id="hero">
+    <h1 class="greet" aria-label="Shubho Deepaboli"><span>শুভ</span> <span>দীপাবলি</span></h1>
+    <p class="gloss">Shubho Deepaboli, from Kolkata</p>
+    <p class="when" id="when">Diwali and Kali Puja fall on the new-moon night of Sunday, 8 November 2026.</p>
+    <div class="tools">
+      <button class="btn warm" id="lightBtn" type="button">Light a diya</button>
+      <button class="btn" id="fireBtn" type="button">Launch a firework</button>
+      <span class="hint">Or tap the map to light one, and the sky for a firework.</span>
+    </div>
+  </section>
+
+  <section class="note" id="route">
+    <div class="card">
+      <h2>Every stop on the route is lit tonight</h2>
+      <p>The same map as my portfolio, on the darkest night of the year. No moon, so the stars and the lamps do all the work.</p>
+      <ul class="stops">
+        <li><i></i><span><b>Kolkata</b>, where it started at Alien Brains</span></li>
+        <li><i></i><span><b>Bengaluru</b>, maps and micro-frontends at Aidash</span></li>
+        <li><i></i><span><b>Home</b>, building expense apps at Paylocity</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="alpana" id="alpanaSec">
+    <div>
+      <h2>Draw an alpana</h2>
+      <p>In Bengal the floor art for Lakshmi and Kali Puja is alpana, painted in white rice paste. Every one here is generated fresh and never repeats.</p>
+      <div class="tools"><button class="btn" id="alpanaBtn" type="button">Draw another alpana</button></div>
+    </div>
+    <canvas id="alpana" role="img" aria-label="An alpana pattern drawing itself in white on a deep red floor"></canvas>
+  </section>
+
+  <section class="roof" id="roof">
+    <div>
+      <h2>Up on the roof with Cheeto and Teeto</h2>
+      <p>Kolkata rooftops on Kali Puja night: lamps on every parapet and paper lanterns drifting over the city. The cats are mostly here for the lanterns.</p>
+      <div class="tools"><button class="btn warm" id="fanushBtn" type="button">Send up a fanush</button></div>
+    </div>
+    <svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2347"/><stop offset="1" stop-color="#0A1026"/></linearGradient></defs>
+      <path d="M0 150 H70 V110 H130 V150 H210 V90 H250 V70 H262 V90 H300 V150 H380 V120 H470 V150 H540 V100 H600 V150 H700 V80 H760 V150 H840 V125 H930 V150 H1010 V95 H1060 V150 H1200 V300 H0Z" fill="#121A3A"/>
+      <g fill="#FFB547" opacity=".8"><rect x="86" y="124" width="6" height="8"/><rect x="226" y="104" width="6" height="8"/><rect x="556" y="116" width="6" height="8"/><rect x="718" y="96" width="6" height="8"/><rect x="1024" y="110" width="6" height="8"/><rect x="400" y="134" width="6" height="8"/></g>
+      <path d="M0 210 H1200 V300 H0Z" fill="url(#wall)"/>
+      <rect x="0" y="200" width="1200" height="14" fill="#232C55"/>
+      <g id="parapetLamps"></g>
+      <g transform="translate(150 132)"><rect width="70" height="56" rx="4" fill="#1B2347"/><rect x="8" y="56" width="6" height="24" fill="#1B2347"/><rect x="56" y="56" width="6" height="24" fill="#1B2347"/></g>
+      <path d="M1040 200 V120 M1020 130 H1060 M1026 146 H1054" stroke="#2A3366" stroke-width="3"/>
+      <!-- Cheeto: white and orange -->
+      <g transform="translate(520 120)">
+        <path class="tail" d="M58 78 C92 82 100 60 90 46" fill="none" stroke="#E08A3C" stroke-width="9" stroke-linecap="round"/>
+        <path d="M14 82 C8 46 22 26 40 26 C58 26 72 46 66 82Z" fill="#F4EEE4"/>
+        <path d="M18 70 C22 50 34 40 44 40 C40 56 32 70 18 70Z" fill="#E08A3C"/>
+        <g class="head"><path d="M24 14 L22 -4 L36 8Z M56 14 L58 -4 L44 8Z" fill="#E08A3C"/><circle cx="40" cy="18" r="17" fill="#F4EEE4"/><path d="M26 10 C30 2 40 0 44 6 C38 10 32 16 26 18Z" fill="#E08A3C"/></g>
+      </g>
+      <!-- Teeto: ginger -->
+      <g transform="translate(610 116)">
+        <path class="tail t2" d="M62 82 C100 86 106 60 94 44" fill="none" stroke="#D9792B" stroke-width="12" stroke-linecap="round"/>
+        <path d="M12 86 C6 46 22 26 42 26 C62 26 78 46 72 86Z" fill="#D9792B"/>
+        <path d="M24 50 Q42 58 60 50 M22 62 Q42 70 62 62" stroke="#A9541A" stroke-width="4" fill="none"/>
+        <g class="head h2"><path d="M24 14 L22 -6 L37 8Z M60 14 L62 -6 L47 8Z" fill="#D9792B"/><circle cx="42" cy="18" r="18" fill="#D9792B"/><path d="M32 6 Q42 12 52 6" stroke="#A9541A" stroke-width="3" fill="none"/></g>
+      </g>
+      <text x="560" y="236" text-anchor="middle" font-family="Newsreader" font-style="italic" font-size="18" fill="#CBBFA6">Cheeto</text>
+      <text x="652" y="236" text-anchor="middle" font-family="Newsreader" font-style="italic" font-size="18" fill="#CBBFA6">Teeto</text>
+    </svg>
+  </section>
+
+  <section class="close" id="close">
+    <h2>শুভ দীপাবলি</h2>
+    <p>Happy Diwali and a peaceful Kali Puja from Prasun, Cheeto and Teeto. May your builds pass on the first try.</p>
+    <div class="tools">
+      <button class="btn warm" id="shareBtn" type="button">Share this greeting</button>
+      <a class="btn" href="../">Back to the portfolio</a>
+    </div>
+    <p class="foot">The map, lamps, fireworks and lanterns are drawn live in your browser with three.js.</p>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
