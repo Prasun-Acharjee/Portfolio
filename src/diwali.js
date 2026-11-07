@@ -1,4 +1,4 @@
-// Diwali / Kali Puja page: the portfolio's topo map on a new-moon night.
+// Diwali page: the portfolio's topo map on a new-moon night.
 // Source for diwali/app.js. Build: npx esbuild src/diwali.js --bundle --format=esm --minify --outfile=diwali/app.js
 import {
   WebGLRenderer, Scene, PerspectiveCamera, Color, FogExp2, CanvasTexture, SRGBColorSpace, PlaneGeometry, Mesh,
@@ -31,16 +31,16 @@ const SEASONS = [
   const days = (a, b) => Math.round((b - a) / 864e5);
   const s = SEASONS.find((x) => today <= at(x.end));
   const el = $('when');
-  if (!s) { el.textContent = 'Diwali and Kali Puja fall on the new-moon night of Kartik.'; return; }
+  if (!s) { el.textContent = 'Diwali falls on the new-moon night of Kartik.'; return; }
   const main = at(s.main), start = at(s.start);
   if (today >= start) {
     const n = days(today, main);
-    el.textContent = n > 0 ? `Diwali and Kali Puja fall on the new-moon night of ${s.label}. ${n === 1 ? 'Tomorrow' : n + ' days to go'}.`
-      : n === 0 ? `Tonight is Diwali and Kali Puja, the new-moon night of ${s.label}.`
-      : `Diwali and Kali Puja fell on the new-moon night of ${s.label}. The lamps stay lit here a little longer.`;
+    el.textContent = n > 0 ? `Diwali falls on the new-moon night of ${s.label}. ${n === 1 ? 'Tomorrow' : n + ' days to go'}.`
+      : n === 0 ? `Tonight is Diwali, the new-moon night of ${s.label}.`
+      : `Diwali fell on the new-moon night of ${s.label}. The lamps stay lit here a little longer.`;
   } else {
     const n = days(today, main);
-    el.textContent = `The next Diwali and Kali Puja fall on ${s.label}, ${n} days from now. The lamps here stay lit all year.`;
+    el.textContent = `The next Diwali falls on ${s.label}, ${n} days from now. The lamps here stay lit all year.`;
   }
 })();
 
@@ -387,7 +387,7 @@ $('fanushBtn').addEventListener('click', () => {
 });
 $('shareBtn').addEventListener('click', async () => {
   const url = location.origin + location.pathname;
-  const data = { title: 'Shubho Deepaboli', text: 'Light a diya on my map. Shubho Deepaboli from Prasun, Cheeto and Teeto.', url };
+  const data = { title: 'Happy Diwali', text: 'Light a diya on my map. Happy Diwali from Prasun, Cheeto and Teeto.', url };
   try { if (navigator.share) { await navigator.share(data); return; } await navigator.clipboard.writeText(url); toast('Link copied'); }
   catch (e) { if (e && e.name !== 'AbortError') toast('Copy the address from the bar to share it'); }
 });
@@ -404,7 +404,7 @@ $('shareBtn').addEventListener('click', async () => {
   if (!reduce) { const st = document.createElement('style'); st.textContent = '.pl{transform-box:fill-box;transform-origin:50% 100%;animation:pf 1.6s ease-in-out infinite}@keyframes pf{50%{transform:scale(.88,1.08)}}'; document.head.appendChild(st); }
 }
 
-/* ---------------- alpana ---------------- */
+/* ---------------- rangoli ---------------- */
 const al = $('alpana'), ag = al.getContext('2d');
 let alSeed = 7, alRun = 0;
 function rng(seed) { return () => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -427,7 +427,7 @@ function buildAlpana(seed) {
   else groups.push({ lines: sym(petal(0.28, 0.44, 0.38 + R() * 0.2), n, Math.PI / n) });
   groups.push({ lines: [circle(0.46)] });
   groups.push(dots(0.49, n * 3, 0.007));
-  // band three: paired curls, the signature of Bengali alpana
+  // band three: paired curls
   const cr = 0.6 + R() * 0.04, cs = 0.06 + R() * 0.02;
   groups.push({ lines: [...sym(rot(curl(cr, cs, 1), 0.06)), ...sym(rot(curl(cr, cs, -1), -0.06))] });
   groups.push({ lines: sym([[0, 0.52], [0, cr - cs * 0.6]]) });
@@ -438,22 +438,23 @@ function buildAlpana(seed) {
   groups.push({ lines: sym(leaf(0.88, 0.97, 0.022), n) });
   return groups;
 }
+const RCOLS = ['#FFF1D6', '#FFB547', '#FF6F91', '#7FD1C3', '#F28C28', '#FFF1D6', '#C9A0FF', '#FFD84D'];
 function lenOf(p) { let L = 0; for (let k = 1; k < p.length; k++) L += Math.hypot(p[k][0] - p[k - 1][0], p[k][1] - p[k - 1][1]); return L; }
 function drawAlpana(seed, instant) {
   const run = ++alRun, dpr = Math.min(devicePixelRatio, 2), S = al.clientWidth * dpr;
   al.width = al.height = S;
-  const groups = buildAlpana(seed), c = S / 2, sc = S * 0.48;
+  const groups = buildAlpana(seed), c = S / 2, sc = S * 0.48, colShift = seed % RCOLS.length;
   const bg = () => { ag.fillStyle = '#5B1626'; ag.fillRect(0, 0, S, S); };
   ag.lineCap = ag.lineJoin = 'round';
   const DUR = 520, start = performance.now();
   function paint(t) {
     if (run !== alRun) return;
-    bg(); ag.strokeStyle = ag.fillStyle = '#F6E7C8';
-    ag.shadowColor = 'rgba(246,231,200,.35)'; ag.shadowBlur = 4 * dpr;
+    bg();
+    ag.shadowBlur = 5 * dpr;
     const el = instant ? 1e9 : t - start;
     groups.forEach((g, gi) => {
       const p = Math.max(0, Math.min(1, (el - gi * DUR * 0.62) / DUR)); if (p <= 0) return;
-      ag.fillStyle = '#F6E7C8';
+      const col = RCOLS[(gi + colShift) % RCOLS.length]; ag.fillStyle = ag.strokeStyle = col; ag.shadowColor = col + '66';
       if (g.dots) { g.dots.forEach(([x, y, s]) => { ag.beginPath(); ag.arc(c + x * sc, c + y * sc, s * sc * Math.min(1, p * 1.4), 0, 6.283); ag.fill(); }); return; }
       ag.lineWidth = S * (gi === 0 ? 0.006 : 0.0052);
       g.lines.forEach((pts) => {

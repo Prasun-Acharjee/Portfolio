@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shubho Deepaboli from Prasun</title>
-<meta name="description" content="A Diwali and Kali Puja greeting from Prasun, Cheeto and Teeto in Kolkata. Light a diya, launch a firework, draw an alpana.">
+<title>Happy Diwali from Prasun</title>
+<meta name="description" content="A Diwali greeting from Prasun, Cheeto and Teeto. Light a diya, launch a firework, draw a rangoli.">
 <meta name="theme-color" content="#0E1530">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Shubho Deepaboli from Prasun">
-<meta property="og:description" content="Light a diya on the map, launch a firework and send up a fanush with Cheeto and Teeto.">
+<meta property="og:title" content="Happy Diwali from Prasun">
+<meta property="og:description" content="Light a diya on the map, launch a firework and send up a sky lantern with Cheeto and Teeto.">
 <meta property="og:image" content="https://prasun-portfolio-gamma.vercel.app/diwali/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@1,6..72,400..600&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@1,6..72,400..600&display=swap" rel="stylesheet">
 <style>
 :root{
   --night:#0E1530; --night2:#161F45; --brass:#C9A24B; --flame:#FFB547; --sindoor:#D6264F; --marigold:#F28C28;
@@ -43,7 +43,7 @@ a{color:inherit;text-underline-offset:.2em}
 
 /* hero */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:96px var(--gut) clamp(28px,7vh,72px)}
-.greet{font-family:"Noto Serif Bengali",serif;font-weight:700;font-size:clamp(64px,13vw,184px);line-height:1.05;letter-spacing:-.01em;color:var(--glow);
+.greet{font-family:Newsreader,Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(68px,14vw,200px);line-height:.95;letter-spacing:-.025em;color:var(--glow);
   text-shadow:0 0 28px rgba(255,181,71,.45),0 0 2px rgba(255,181,71,.6)}
 .greet span{display:inline-block;opacity:0;filter:blur(6px);transform:translateY(8px)}
 .lit .greet span{opacity:1;filter:none;transform:none;transition:opacity 700ms var(--ease-out),filter 700ms var(--ease-out),transform 900ms var(--ease-out)}
@@ -67,7 +67,7 @@ a{color:inherit;text-underline-offset:.2em}
 @media(max-width:860px){.note{background:linear-gradient(180deg,rgba(9,12,32,0) 0,rgba(9,12,32,.85) 22%,rgba(9,12,32,.85) 78%,rgba(9,12,32,0) 100%)}}
 .hero::before{content:"";position:absolute;left:0;right:0;bottom:0;height:62svh;background:linear-gradient(180deg,rgba(9,12,32,0),rgba(9,12,32,.78) 70%);pointer-events:none;z-index:-1}
 .hero{position:relative}
-.roof > div:first-child{background:radial-gradient(ellipse at 20% 40%,rgba(9,12,32,.7),rgba(9,12,32,0) 70%);padding:12px 0}
+.roof h2,.roof p,.note h2,.note p{text-shadow:0 2px 14px rgba(9,12,32,.95),0 0 4px rgba(9,12,32,.8)}
 .alpana,.close{pointer-events:auto}
 .stops{list-style:none;margin-top:22px;display:grid;gap:10px}
 .stops li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
@@ -98,7 +98,7 @@ a{color:inherit;text-underline-offset:.2em}
 
 /* close */
 .close{background:#0A1026;padding:clamp(72px,10vw,120px) var(--gut) 56px;position:relative;z-index:2}
-.close h2{font-family:"Noto Serif Bengali",serif;font-weight:700;font-size:clamp(40px,6vw,80px);line-height:1.1;color:var(--glow)}
+.close h2{font-family:Newsreader,Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(48px,7vw,96px);line-height:1;letter-spacing:-.02em;color:var(--glow)}
 .close p{color:var(--glow2);margin-top:12px;max-width:44ch;font-size:18px}
 .close .tools{margin-top:28px}
 .close a.btn{text-decoration:none}
@@ -129,9 +129,9 @@ a{color:inherit;text-underline-offset:.2em}
 
 <main class="layer">
   <section class="hero" id="hero">
-    <h1 class="greet" aria-label="Shubho Deepaboli"><span>শুভ</span> <span>দীপাবলি</span></h1>
-    <p class="gloss">Shubho Deepaboli, from Kolkata</p>
-    <p class="when" id="when">Diwali and Kali Puja fall on the new-moon night of Sunday, 8 November 2026.</p>
+    <h1 class="greet"><span>Happy</span> <span>Diwali</span></h1>
+    <p class="gloss">from Prasun, Cheeto and Teeto</p>
+    <p class="when" id="when">Diwali falls on the new-moon night of Sunday, 8 November 2026.</p>
     <div class="tools">
       <button class="btn warm" id="lightBtn" type="button">Light a diya</button>
       <button class="btn" id="fireBtn" type="button">Launch a firework</button>
@@ -153,18 +153,18 @@ a{color:inherit;text-underline-offset:.2em}
 
   <section class="alpana" id="alpanaSec">
     <div>
-      <h2>Draw an alpana</h2>
-      <p>In Bengal the floor art for Lakshmi and Kali Puja is alpana, painted in white rice paste. Every one here is generated fresh and never repeats.</p>
-      <div class="tools"><button class="btn" id="alpanaBtn" type="button">Draw another alpana</button></div>
+      <h2>Draw a rangoli</h2>
+      <p>Rangoli is drawn at the doorstep for Diwali to welcome guests and good luck. Every one here is generated fresh and never repeats.</p>
+      <div class="tools"><button class="btn" id="alpanaBtn" type="button">Draw another rangoli</button></div>
     </div>
-    <canvas id="alpana" role="img" aria-label="An alpana pattern drawing itself in white on a deep red floor"></canvas>
+    <canvas id="alpana" role="img" aria-label="A rangoli pattern drawing itself in colour on a deep red floor"></canvas>
   </section>
 
   <section class="roof" id="roof">
     <div>
       <h2>Up on the roof with Cheeto and Teeto</h2>
-      <p>Kolkata rooftops on Kali Puja night: lamps on every parapet and paper lanterns drifting over the city. The cats are mostly here for the lanterns.</p>
-      <div class="tools"><button class="btn warm" id="fanushBtn" type="button">Send up a fanush</button></div>
+      <p>Lamps along every ledge and paper lanterns drifting over the city. The cats are mostly here for the lanterns.</p>
+      <div class="tools"><button class="btn warm" id="fanushBtn" type="button">Send up a lantern</button></div>
     </div>
     <svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
       <defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2347"/><stop offset="1" stop-color="#0A1026"/></linearGradient></defs>
@@ -195,8 +195,8 @@ a{color:inherit;text-underline-offset:.2em}
   </section>
 
   <section class="close" id="close">
-    <h2>শুভ দীপাবলি</h2>
-    <p>Happy Diwali and a peaceful Kali Puja from Prasun, Cheeto and Teeto. May your builds pass on the first try.</p>
+    <h2>Happy Diwali</h2>
+    <p>Wishing you light, sweets and a little luck, from Prasun, Cheeto and Teeto. May your builds pass on the first try.</p>
     <div class="tools">
       <button class="btn warm" id="shareBtn" type="button">Share this greeting</button>
       <a class="btn" href="../">Back to the portfolio</a>
