@@ -348,11 +348,44 @@ document.body.classList.add('lit-ready');
 const ray = new Raycaster(), ndc = new Vector2();
 let userLit = 0; try { userLit = +localStorage.getItem('diyasLit') || 0; } catch (e) {}
 const countEl = $('count');
-const showCount = () => { countEl.textContent = userLit ? `You've lit ${userLit} ${userLit === 1 ? 'diya' : 'diyas'}` : ''; };
+/* shared counters across everyone: totals from /api/diwali-counts, plus this visitor's not-yet-sent taps */
+const API = '/api/diwali-counts/';
+const fmt = new Intl.NumberFormat('en-IN');
+let shared = null; const pending = { diyas: 0, fireworks: 0, rangolis: 0 };
+const plural = (n, one, many) => `${fmt.format(n)} ${n === 1 ? one : many}`;
+function showCount() {
+  if (!shared) { countEl.textContent = userLit ? `You've lit ${plural(userLit, 'diya', 'diyas')}` : ''; return; }
+  const t = (f) => shared[f] + pending[f];
+  countEl.innerHTML = `<span>Everyone so far:</span> <span>${plural(t('diyas'), 'diya', 'diyas')} ·</span> <span>${plural(t('fireworks'), 'firework', 'fireworks')} ·</span> <span>${plural(t('rangolis'), 'rangoli', 'rangolis')}</span>`;
+  countEl.title = userLit ? `You've lit ${plural(userLit, 'diya', 'diyas')}` : '';
+}
 showCount();
+const takeTotals = (j) => { if (j && typeof j.diyas === 'number') { shared = j; showCount(); } };
+async function pull() {
+  if (OG || document.hidden) return;
+  try { const r = await fetch(API, { cache: 'no-store' }); if (r.ok) takeTotals(await r.json()); } catch (e) {}
+}
+let flushT = 0, flushing = false;
+async function flush() {
+  flushT = 0;
+  if (flushing || !(pending.diyas || pending.fireworks || pending.rangolis)) return;
+  const sent = { ...pending }; flushing = true;
+  try {
+    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sent), keepalive: true });
+    if (r.ok) { for (const f in sent) pending[f] -= sent[f]; takeTotals(await r.json()); }
+  } catch (e) {} finally { flushing = false; }
+}
+function tally(f) { pending[f]++; showCount(); if (!flushT) flushT = setTimeout(flush, 2500); }
+if (!OG) {
+  pull(); setInterval(pull, 20000);
+  addEventListener('pagehide', () => {
+    if (!(pending.diyas || pending.fireworks || pending.rangolis)) return;
+    try { navigator.sendBeacon(API, new Blob([JSON.stringify(pending)], { type: 'application/json' })); } catch (e) {}
+  });
+}
 const toastEl = $('toast'); let toastT;
 function toast(t) { toastEl.textContent = t; toastEl.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('on'), 1800); }
-function litOne() { userLit++; try { localStorage.setItem('diyasLit', userLit); } catch (e) {} showCount(); }
+function litOne() { userLit++; try { localStorage.setItem('diyasLit', userLit); } catch (e) {} tally('diyas'); }
 function skyPoint(dir, origin) {
   const ty = 13 + Math.random() * 7;
   if (dir.y > 0.05) { const t = (ty - origin.y) / dir.y; if (t > 0 && t < 160) return origin.clone().addScaledVector(dir, t); }
@@ -363,7 +396,7 @@ canvas.addEventListener('click', (e) => {
   ray.setFromCamera(ndc, camera);
   const hit = ray.intersectObject(ground, false)[0];
   if (hit && hit.distance < 90) { addDiya(hit.point.x, hit.point.z, now()); litOne(); kick(); }
-  else { launch(skyPoint(ray.ray.direction, ray.ray.origin)); kick(1.6); }
+  else { launch(skyPoint(ray.ray.direction, ray.ray.origin)); tally('fireworks'); kick(1.6); }
 });
 $('lightBtn').addEventListener('click', () => {
   // light one somewhere in view near the middle of the screen
@@ -374,7 +407,7 @@ $('lightBtn').addEventListener('click', () => {
 });
 $('fireBtn').addEventListener('click', () => {
   ray.setFromCamera(new Vector2((Math.random() - 0.5) * 1.2, 0.35 + Math.random() * 0.35), camera);
-  launch(skyPoint(ray.ray.direction, ray.ray.origin)); kick(1.6);
+  launch(skyPoint(ray.ray.direction, ray.ray.origin)); tally('fireworks'); kick(1.6);
 });
 $('fanushBtn').addEventListener('click', () => {
   for (let k = 0; k < 3; k++) {
@@ -473,7 +506,7 @@ function drawAlpana(seed, instant) {
 }
 let alStarted = false;
 new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && !alStarted) { alStarted = true; drawAlpana(alSeed, reduce); } }), { threshold: 0.35 }).observe(al);
-const nextAlpana = () => { alSeed = (Math.random() * 1e9) | 0; drawAlpana(alSeed, reduce); };
+const nextAlpana = () => { alSeed = (Math.random() * 1e9) | 0; drawAlpana(alSeed, reduce); tally('rangolis'); };
 $('alpanaBtn').addEventListener('click', nextAlpana);
 al.addEventListener('click', nextAlpana);
 addEventListener('resize', () => { if (alStarted) drawAlpana(alSeed, true); });

@@ -39,7 +39,11 @@ a{color:inherit;text-underline-offset:.2em}
 .top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px var(--gut) 28px;pointer-events:none;background:linear-gradient(180deg,rgba(9,12,32,.85),rgba(9,12,32,0))}
 .top a{pointer-events:auto;text-decoration:none;font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;color:var(--glow)}
 .top a svg{width:16px;height:16px}
-.count{font-size:14px;color:var(--glow2);font-variant-numeric:tabular-nums}
+.top{gap:16px}
+.top a{flex:none}
+.count{font-size:14px;line-height:1.35;color:var(--glow2);font-variant-numeric:tabular-nums;text-align:right}
+.count span{white-space:nowrap}
+@media(max-width:560px){.count{font-size:12.5px;max-width:24ch}}
 
 /* hero */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:96px var(--gut) clamp(28px,7vh,72px)}
